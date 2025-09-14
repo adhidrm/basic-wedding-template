@@ -10,6 +10,7 @@ import GiftRegistry from "../components/GiftRegistry";
 import DressCode from "../components/DressCode";
 import Accommodation from "../components/Accommodation";
 import ThemeSwitcher from "../components/ThemeSwitcher";
+import MusicPlayer from "../components/MusicPlayer";
 import { Heart, Calendar, MapPin, Camera, Clock, Gift, Shirt, Home } from "lucide-react";
 
 const WeddingInvitation = () => {
@@ -31,7 +32,6 @@ const WeddingInvitation = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100;
-      const windowHeight = window.innerHeight;
       
       sections.forEach(section => {
         const element = document.getElementById(section.id);
@@ -58,30 +58,34 @@ const WeddingInvitation = () => {
   return (
     <div className={`min-h-screen bg-gradient-to-br ${currentTheme.primary} text-${currentTheme.text} relative overflow-x-hidden`}>
       {/* Background Pattern */}
-      <div className="fixed inset-0 opacity-5">
+      <div className="fixed inset-0 opacity-5 pointer-events-none">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.1%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
       </div>
 
       {/* Theme Switcher */}
       <ThemeSwitcher />
 
+      {/* Music Player */}
+      <MusicPlayer />
+
       {/* Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 mx-4 mb-4">
-        <div className={`bg-${currentTheme.card} backdrop-blur-md rounded-2xl border border-${currentTheme.border} shadow-2xl`}>
-          <div className="flex justify-around items-center py-2">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 p-4">
+        <div className={`bg-${currentTheme.card} backdrop-blur-md rounded-full border border-${currentTheme.border} shadow-2xl max-w-sm mx-auto`}>
+          <div className="flex justify-around items-center py-2 px-2">
             {sections.slice(0, 5).map((section) => {
               const Icon = section.icon;
               return (
                 <button
                   key={section.id}
                   onClick={() => scrollToSection(section.id)}
-                  className={`p-3 rounded-xl transition-all duration-300 ${
+                  className={`p-2 rounded-full transition-all duration-300 ${
                     activeSection === section.id
                       ? `bg-gradient-to-r ${currentTheme.secondary} text-white shadow-lg scale-110`
                       : `text-${currentTheme.textSecondary} hover:text-${currentTheme.accent} hover:scale-105`
                   }`}
+                  title={section.label}
                 >
-                  <Icon size={20} />
+                  <Icon size={16} />
                 </button>
               );
             })}
@@ -92,7 +96,7 @@ const WeddingInvitation = () => {
       {/* Secondary Navigation */}
       <nav className="fixed top-4 right-4 z-50">
         <div className={`bg-${currentTheme.card} backdrop-blur-md rounded-2xl border border-${currentTheme.border} shadow-2xl`}>
-          <div className="flex flex-col gap-1 p-2">
+          <div className="flex flex-col gap-1 p-1">
             {sections.slice(5).map((section) => {
               const Icon = section.icon;
               return (
@@ -106,7 +110,7 @@ const WeddingInvitation = () => {
                   }`}
                   title={section.label}
                 >
-                  <Icon size={16} />
+                  <Icon size={14} />
                 </button>
               );
             })}
@@ -123,31 +127,31 @@ const WeddingInvitation = () => {
         <CountdownTimer />
       </section>
 
-      <section id="gallery" className="min-h-screen">
+      <section id="gallery" className="min-h-screen flex items-center">
         <PhotoGallery />
       </section>
 
-      <section id="timeline" className="min-h-screen">
+      <section id="timeline" className="min-h-screen flex items-center">
         <WeddingTimeline />
       </section>
 
-      <section id="rsvp" className="min-h-screen">
+      <section id="rsvp" className="min-h-screen flex items-center">
         <RSVPForm />
       </section>
 
-      <section id="location" className="min-h-screen">
+      <section id="location" className="min-h-screen flex items-center">
         <MapLocation />
       </section>
 
-      <section id="gifts" className="min-h-screen">
+      <section id="gifts" className="min-h-screen flex items-center">
         <GiftRegistry />
       </section>
 
-      <section id="dress" className="min-h-screen">
+      <section id="dress" className="min-h-screen flex items-center">
         <DressCode />
       </section>
 
-      <section id="stay" className="min-h-screen">
+      <section id="stay" className="min-h-screen flex items-center">
         <Accommodation />
       </section>
     </div>

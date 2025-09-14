@@ -6,6 +6,7 @@
     min-height: 100vh;
     background: #000;
     position: relative;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
   }
   
   .App::before,
@@ -28,6 +29,26 @@
   }
 }
 
+/* Improved mobile responsiveness */
+@media (max-width: 767px) {
+  .container {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Better text contrast and readability */
+.text-contrast-high {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Improved container constraints */
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
 /* Smooth scrolling for the entire app */
 html {
   scroll-behavior: smooth;
@@ -35,7 +56,7 @@ html {
 
 /* Custom scrollbar styling */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -44,21 +65,21 @@ html {
 
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* Theme-specific styles */
+/* Theme-specific styles with better contrast */
 .elegant-dark {
   --primary-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   --secondary-gradient: linear-gradient(135deg, #881337 0%, #be185d 100%);
   --accent-color: #fb7185;
   --text-primary: #ffffff;
-  --text-secondary: #cbd5e1;
-  --card-bg: rgba(30, 41, 59, 0.5);
+  --text-secondary: #e2e8f0;
+  --card-bg: rgba(30, 41, 59, 0.8);
   --border-color: #475569;
 }
 
@@ -67,8 +88,8 @@ html {
   --secondary-gradient: linear-gradient(135deg, #fb7185 0%, #ec4899 100%);
   --accent-color: #e11d48;
   --text-primary: #1f2937;
-  --text-secondary: #4b5563;
-  --card-bg: rgba(255, 255, 255, 0.8);
+  --text-secondary: #374151;
+  --card-bg: rgba(255, 255, 255, 0.9);
   --border-color: #fda4af;
 }
 
@@ -78,7 +99,7 @@ html {
   --accent-color: #fbbf24;
   --text-primary: #ffffff;
   --text-secondary: #fef3c7;
-  --card-bg: rgba(120, 53, 15, 0.5);
+  --card-bg: rgba(120, 53, 15, 0.8);
   --border-color: #d97706;
 }
 
@@ -88,25 +109,36 @@ html {
   --accent-color: #34d399;
   --text-primary: #ffffff;
   --text-secondary: #d1fae5;
-  --card-bg: rgba(6, 78, 59, 0.5);
+  --card-bg: rgba(6, 78, 59, 0.8);
   --border-color: #059669;
 }
 
-/* Enhanced animations */
+/* Enhanced animations with better performance */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes pulse-gentle {
-  0%, 100% { opacity: 0.8; }
+  0%, 100% { opacity: 0.6; }
   50% { opacity: 1; }
 }
 
 @keyframes slide-up {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
   }
   to {
     opacity: 1;
@@ -115,42 +147,47 @@ html {
 }
 
 .animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: float 4s ease-in-out infinite;
 }
 
 .animate-pulse-gentle {
-  animation: pulse-gentle 2s ease-in-out infinite;
+  animation: pulse-gentle 3s ease-in-out infinite;
 }
 
 .animate-slide-up {
-  animation: slide-up 0.6s ease-out forwards;
+  animation: slide-up 0.8s ease-out forwards;
 }
 
-/* Enhanced hover effects */
+.animate-fade-in {
+  animation: fade-in 1s ease-out forwards;
+}
+
+/* Enhanced hover effects with better performance */
 .hover-scale {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .hover-scale:hover {
-  transform: scale(1.02);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
 }
 
-/* Custom gradient text */
+/* Custom gradient text with better fallbacks */
 .gradient-text {
   background: linear-gradient(135deg, var(--accent-color), var(--secondary-gradient));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  color: var(--accent-color); /* fallback */
 }
 
-/* Glass morphism effect */
+/* Improved glass morphism effect */
 .glass-morphism {
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.125);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Loading animation */
@@ -161,6 +198,15 @@ html {
 
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+/* Better spacing and typography */
+.leading-tight {
+  line-height: 1.1;
+}
+
+.leading-relaxed {
+  line-height: 1.4;
 }
 
 /* Mobile-specific optimizations */
@@ -183,6 +229,12 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  
+  /* Better font sizes for mobile */
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 1.125rem; }
+  p { font-size: 0.875rem; }
 }
 
 /* Focus states for accessibility */
@@ -199,8 +251,55 @@ input, textarea, select {
   font-size: 16px;
 }
 
-@media (max-width: 767px) {
-  input, textarea, select {
-    font-size: 16px;
-  }
+/* Fixed positioning improvements */
+.fixed {
+  position: fixed;
+}
+
+/* Z-index management */
+.z-40 { z-index: 40; }
+.z-50 { z-index: 50; }
+
+/* Better card styling */
+.card-improved {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation improvements */
+nav button {
+  transition: all 0.2s ease;
+}
+
+nav button:hover {
+  transform: translateY(-1px);
+}
+
+/* Music player styling improvements */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.slider::-moz-range-thumb {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
