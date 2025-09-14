@@ -1,0 +1,3 @@
+/* This is a placeholder file. In a real implementation, you would place an actual audio file here.
+For now, the MusicPlayer component will fallback to other audio sources or show a message that music is not available. 
+You can replace this with an actual .mp3 file of wedding music. */
