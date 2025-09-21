@@ -117,6 +117,40 @@ Buat file `.env` di folder `frontend`:
 REACT_APP_BACKEND_URL=http://localhost:8001
 ```
 
+Untuk konfigurasi Analytics yang lengkap (GA4, GTM, Meta Pixel, Segment, consent, CSP/nonces, ad-block fallback), silakan lihat docs/ANALYTICS.md.
+
+#### Contoh .env Production
+
+- Backend (backend/.env):
+```env
+MONGO_URL=mongodb://localhost:27017/wedding_db
+DB_NAME=wedding_db
+# Batasi asal (CORS) sesuai domain produksi Anda
+CORS_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
+```
+
+- Frontend (frontend/.env.production):
+```env
+# URL backend untuk produksi
+REACT_APP_BACKEND_URL=https://yourdomain.com
+
+# Feature flag Analytics (kill switch)
+REACT_APP_ANALYTICS_ENABLED=true
+
+# GA4 Measurement ID produksi
+REACT_APP_GA4_MEASUREMENT_ID=G-XXXXPROD123
+
+# Label environment
+REACT_APP_ENVIRONMENT=production
+
+# Endpoint fallback ketika GA diblokir (opsional, direkomendasikan)
+REACT_APP_ANALYTICS_FALLBACK_URL=https://yourdomain.com/api/analytics/events
+```
+
+Tips:
+- Pada build produksi CRA, gunakan .env.production agar variabel REACT_APP_* terinjeksikan saat build.
+- Pastikan domain di CORS_ORIGINS selaras dengan domain frontend agar fallback endpoint dapat diakses.
+
 ### 5. Jalankan MongoDB
 ```bash
 # Menggunakan Docker
@@ -309,21 +343,29 @@ sudo ufw enable
 ```
 wedding-invitation/
 ├── backend/
-│   ├── server.py          # Main FastAPI application
-│   ├── requirements.txt   # Python dependencies
-│   └── .env              # Backend environment variables
+│   ├── server.py            # FastAPI app (+ /api/analytics/events fallback endpoint)
+│   ├── requirements.txt     # Python dependencies
+│   └── .env                 # Backend environment variables
 ├── frontend/
+│   ├── public/
+│   │   └── index.html       # Preconnect/DNS-prefetch & CSP guidance
 │   ├── src/
-│   │   ├── components/   # React components
-│   │   ├── contexts/     # React contexts (Theme)
-│   │   ├── hooks/        # Custom hooks
-│   │   ├── pages/        # Page components
-│   │   └── utils/        # Utility functions & mock data
-│   ├── public/          # Static assets
-│   ├── package.json     # Frontend dependencies
-│   └── .env            # Frontend environment variables
-└── README.md           # Dokumentasi proyek
+│   │   ├── analytics/       # Analytics runtime (GA4 via gtag.js)
+│   │   │   ├── index.js     # Consent gate, DNT, GA loader, SPA router listener, banner
+│   │   │   └── events.js    # DOM helpers: outbound links, button clicks, form submits
+│   │   ├── components/      # React components
+│   │   ├── contexts/        # React contexts (Theme)
+│   │   ├── hooks/           # Custom hooks
+│   │   ├── pages/           # Page components
+│   │   └── utils/           # Utility functions & mock data
+│   ├── package.json         # Frontend dependencies
+│   └── .env                 # Frontend environment variables
+├── docs/
+│   └── ANALYTICS.md         # Panduan lengkap integrasi Analytics (multi-framework/providers)
+└── README.md                # Dokumentasi proyek
 ```
+
+Catatan: Konfigurasi dan template Analytics yang lebih lengkap tersedia di docs/ANALYTICS.md.
 
 ## 🎯 Fitur Khusus
 
