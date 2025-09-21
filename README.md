@@ -1,4 +1,4 @@
-# Wedding Invitation Website - Anindias & Fachry
+# Wedding Invitation Website - AF Template
 
 Sebuah website undangan pernikahan yang elegan dan modern dengan desain mobile-first, menampilkan countdown timer, RSVP form, galeri foto, dan berbagai fitur menarik lainnya.
 
@@ -148,8 +148,8 @@ yarn start
 
 Untuk deployment yang optimal, kami merekomendasikan **DeluxHost VPS STANDARD - VPS-3** dengan spesifikasi:
 - **2 CPU Cores**
-- **4 GB RAM**
-- **60 GB SSD Storage**
+- **8 GB RAM**
+- **80 GB SSD Storage**
 - **Unlimited Bandwidth**
 - **Linux Ubuntu/CentOS**
 
@@ -386,7 +386,7 @@ Edit file `/frontend/src/contexts/ThemeContext.js` untuk:
 
 Untuk bantuan teknis atau pertanyaan:
 - Buat issue di repository ini
-- Contact: anindias.fachry@wedding.com
+- Contact: heyadhidrm@gmail.com
 
 ## 📄 License
 
@@ -394,6 +394,6 @@ MIT License - Bebas digunakan dan dimodifikasi untuk keperluan personal dan kome
 
 ---
 
-**Made with ❤️ for Anindias & Fachry's Wedding**
+**Made with ❤️ for AF Template's Wedding**
 
 *Deployment terbaik dengan [DeluxHost VPS-3](https://billing.deluxhost.net/aff.php?aff=255) - Performa optimal, harga terjangkau!*
