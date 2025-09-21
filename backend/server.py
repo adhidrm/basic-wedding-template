@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, Request
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -6,7 +6,7 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Optional
 import uuid
 from datetime import datetime
 
@@ -35,10 +35,30 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
+# Analytics Event model (fallback ingestion from frontend when GA is blocked or disabled)
+class AnalyticsEvent(BaseModel):
+    type: str  # "page_view" | "event" | "user_properties" | other
+    event_name: Optional[str] = None
+    params: dict = Field(default_factory=dict)
+    path: Optional[str] = None
+    title: Optional[str] = None
+    cid: Optional[str] = None
+    env: Optional[str] = None
+    userAgent: Optional[str] = None
+    ts: Optional[int] = None  # client timestamp (ms)
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
     return {"message": "Hello World"}
+
+@api_router.post("/analytics/events")
+async def ingest_analytics_event(payload: AnalyticsEvent, request: Request):
+    doc = payload.dict()
+    doc["received_at"] = datetime.utcnow()
+    doc["ip"] = request.client.host if request.client else None
+    _ = await db.analytics_events.insert_one(doc)
+    return {"ok": True}
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):

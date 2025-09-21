@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import HeroSection from "../components/HeroSection";
 import CountdownTimer from "../components/CountdownTimer";
@@ -12,10 +12,12 @@ import Accommodation from "../components/Accommodation";
 import ThemeSwitcher from "../components/ThemeSwitcher";
 import MusicPlayer from "../components/MusicPlayer";
 import { Heart, Calendar, MapPin, Camera, Clock, Gift, Shirt, Home } from "lucide-react";
+import Analytics from "../analytics";
 
 const WeddingInvitation = () => {
   const { currentTheme } = useTheme();
   const [activeSection, setActiveSection] = useState("hero");
+  const lastTrackedRef = useRef(null);
 
   const sections = [
     { id: "hero", icon: Heart, label: "Home" },
@@ -32,12 +34,16 @@ const WeddingInvitation = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100;
-      
-      sections.forEach(section => {
+
+      sections.forEach((section) => {
         const element = document.getElementById(section.id);
         if (element) {
           const { offsetTop, offsetHeight } = element;
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            if (lastTrackedRef.current !== section.id) {
+              lastTrackedRef.current = section.id;
+              Analytics.track("section_view", { section_id: section.id });
+            }
             setActiveSection(section.id);
           }
         }
@@ -53,6 +59,11 @@ const WeddingInvitation = () => {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const handleNavClick = (sectionId) => {
+    Analytics.track("nav_click", { section_id: sectionId });
+    scrollToSection(sectionId);
   };
 
   return (
@@ -77,7 +88,7 @@ const WeddingInvitation = () => {
               return (
                 <button
                   key={section.id}
-                  onClick={() => scrollToSection(section.id)}
+                  onClick={() => handleNavClick(section.id)}
                   className={`p-2 rounded-full transition-all duration-300 ${
                     activeSection === section.id
                       ? `bg-gradient-to-r ${currentTheme.secondary} text-white shadow-lg scale-110`
@@ -102,7 +113,7 @@ const WeddingInvitation = () => {
               return (
                 <button
                   key={section.id}
-                  onClick={() => scrollToSection(section.id)}
+                  onClick={() => handleNavClick(section.id)}
                   className={`p-2 rounded-lg transition-all duration-300 ${
                     activeSection === section.id
                       ? `bg-gradient-to-r ${currentTheme.secondary} text-white shadow-lg`

@@ -10,6 +10,7 @@ import { useToast } from "../hooks/use-toast";
 import { Send, Heart, UserCheck, UserX, Clock } from "lucide-react";
 import { mockRSVPData } from "../utils/mockData";
 
+import Analytics from "../analytics";
 const RSVPForm = () => {
   const { currentTheme } = useTheme();
   const { toast } = useToast();
@@ -55,6 +56,13 @@ const RSVPForm = () => {
       };
       mockRSVPData.rsvps.push(newRSVP);
 
+      // Track RSVP submit (exclude PII)
+      Analytics.track("rsvp_submit", {
+        attendance: formData.attendance || undefined,
+        guest_count: parseInt(formData.guestCount, 10) || 1,
+        has_message: Boolean(formData.message && formData.message.trim().length),
+      });
+
       toast({
         title: "RSVP Submitted Successfully! 💕",
         description: "Thank you for confirming your attendance. We can't wait to celebrate with you!",
@@ -71,6 +79,13 @@ const RSVPForm = () => {
         message: ""
       });
     } catch (error) {
+      // Track error without PII
+      Analytics.track("rsvp_error", {
+        attendance: formData.attendance || undefined,
+        guest_count: parseInt(formData.guestCount, 10) || 1,
+        reason: "submit_failed",
+      });
+
       toast({
         title: "Submission Failed",
         description: "Please try again later or contact us directly.",
