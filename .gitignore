@@ -5,6 +5,7 @@
 .vscode/
 .emergent/
 .history/
+
 # Dependencies
 node_modules/
 /node_modules
@@ -19,6 +20,7 @@ node_modules/
 
 # Testing
 /coverage
+test_result.md
 
 # Next.js
 /.next/
